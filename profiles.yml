@@ -1,0 +1,29 @@
+dbt_project:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: my-gcp-project-id
+      dataset: dbt_dev
+      keyfile: /path/to/dev-key.json
+      threads: 2
+      location: US
+
+    staging:
+      type: bigquery
+      method: service-account
+      project: my-gcp-project-id
+      dataset: dbt_staging
+      keyfile: /path/to/staging-key.json
+      threads: 4
+      location: US
+
+    prod:
+      type: bigquery
+      method: service-account
+      project: my-gcp-project-id
+      dataset: dbt_prod
+      keyfile: /path/to/prod-key.json
+      threads: 8
+      location: US
