@@ -1,0 +1,1 @@
+SELECT id, name, created_at FROM `raw_data.customers`

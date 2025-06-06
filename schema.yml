@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: "Stage customers data from raw"
+    columns:
+      - name: id
+        tests:
+          - not_null
+          - unique

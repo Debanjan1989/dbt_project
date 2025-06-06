@@ -1,0 +1,34 @@
+name: dbt Deploy to Prod
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dbt
+        run: pip install dbt-bigquery
+
+      - name: Set GCP Prod Credentials
+        env:
+          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GCP_PROD_KEY }}
+        run: |
+          echo "$GOOGLE_CREDENTIALS_JSON" > key.json
+          export GOOGLE_APPLICATION_CREDENTIALS="key.json"
+          dbt debug --target prod
+          dbt deps
+          dbt run --target prod
+          dbt test --target prod

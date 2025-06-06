@@ -1,0 +1,35 @@
+name: dbt PR Validation
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    name: Validate PR with dbt
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dbt
+        run: pip install dbt-bigquery
+
+      - name: Set GCP Credentials
+        env:
+          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GCP_DEV_KEY }}
+        run: |
+          echo "$GOOGLE_CREDENTIALS_JSON" > key.json
+          export GOOGLE_APPLICATION_CREDENTIALS="key.json"
+          dbt debug --target dev
+          dbt deps
+          dbt compile
+          dbt run --select state:modified+ --target dev
+          dbt test --select state:modified+ --target dev

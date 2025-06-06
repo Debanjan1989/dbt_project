@@ -1,0 +1,1 @@
+SELECT customer_id, COUNT(order_id) AS order_count FROM `core.orders` GROUP BY customer_id
