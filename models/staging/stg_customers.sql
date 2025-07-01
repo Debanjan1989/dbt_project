@@ -1,1 +1,1 @@
-SELECT id, name, created_at FROM `raw_data.customers`
+SELECT id, name, created_at FROM ref{{'core_orders'}}
