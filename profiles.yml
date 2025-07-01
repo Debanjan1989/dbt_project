@@ -3,8 +3,8 @@ dbt_project:
   outputs:
     dev:
       type: bigquery
-      method: service-account
-      project: my-gcp-project-id
+      method: oauth
+      project: caramel-spot-459922-m3
       dataset: dbt_dev
       keyfile: /path/to/dev-key.json
       threads: 2
@@ -14,7 +14,7 @@ dbt_project:
       type: bigquery
       method: service-account
       project: my-gcp-project-id
-      dataset: dbt_staging
+      dataset: staging
       keyfile: /path/to/staging-key.json
       threads: 4
       location: US

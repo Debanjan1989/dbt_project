@@ -1,1 +1,1 @@
-SELECT * FROM `staging.orders`
+SELECT * FROM caramel-spot-459922-m3.staging.customer
